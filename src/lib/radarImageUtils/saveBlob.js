@@ -1,6 +1,6 @@
 import { list, put } from '@vercel/blob';
 
-export const saveImageToBlob = async (url, timestamp) => {
+export const saveImageToBlob = async (timestamp, url) => {
     const formattedTimestamp = timestamp.replace(/[:?&/\\]/g, '-');
     const fileName = `radar-image-${formattedTimestamp}.png`;
     console.log('fileName: ', fileName);
@@ -36,8 +36,11 @@ export const saveImageToBlob = async (url, timestamp) => {
         console.log('blob:', blob);
 
         const blobResult = await put(fileName, blob, {
-            access: 'public',
-            contentType: 'image/png',
+            headers: {
+                access: 'public',
+                contentType: 'image/png',
+            },
+            body: blob,
         });
         console.log('Blob result from put: ', blobResult);
 
