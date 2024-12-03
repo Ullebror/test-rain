@@ -1,4 +1,4 @@
-import { list } from '@vercel/blob';
+import { list, put } from '@vercel/blob';
 
 const uploadBlobUrl = `/api/uploadBlob`;
 
@@ -23,34 +23,14 @@ export const saveImageToBlob = async (url, timestamp) => {
         const arrayBuffer = await res.arrayBuffer();
         const buffer = Buffer.from(arrayBuffer);
 
-        const blobResult = await uploadImageToBlob(buffer, fileName);
+        const blobResult = await put(fileName, buffer, {
+            access: 'public', // Set to 'public' for public access
+            contentType: 'image/png', // Explicitly set the content type
+        });
         console.log(`Image saved to: ${blobResult.url}`);
         return blobResult.url;
     } catch (error) {
         throw new Error(error);
-    }
-};
-
-// Function to upload the processed image to the blob
-const uploadImageToBlob = async (imageBuffer, filename) => {
-    try {
-        const response = await fetch(`${uploadBlobUrl}?filename=${filename}`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'image/png',
-            },
-            body: imageBuffer,
-        });
-
-        if (!response.ok) {
-            throw new Error(
-                `Failed to upload image to blob: ${response.statusText}`
-            );
-        }
-
-        return await response.json(); // Return the blob information, which includes the URL
-    } catch (error) {
-        throw new Error(`Error uploading image: ${error.message}`);
     }
 };
 

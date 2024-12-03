@@ -5,10 +5,7 @@ import { requestRainRadar } from '../fmiQueryData';
 // Function to introduce a delay
 const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 // Main function to fetch and save all radar images
-export async function fetchRadarImagesAndSaveToBlob(
-    timestamps,
-    concurrencyLimit = 2
-) {
+export async function fetchRadarImages(timestamps, concurrencyLimit = 2) {
     const imagePaths = []; // Array to hold successfully saved image paths
     const executing = []; // Array to track currently executing promises
     const urls = timestamps.map((time) => {

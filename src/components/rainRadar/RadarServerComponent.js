@@ -4,7 +4,7 @@ import LoadingSpinner from '../LoadingSpinner';
 import ErrorComponent from '../ErrorComponent';
 import { generateRadarFrameTimestamps } from '@/lib/fmiQueryData';
 import { sendTimestampsToAPI } from '@/lib/radarImageUtils/sendTimestampsToAPI';
-import { fetchRadarImagesAndSaveToBlob } from '@/lib/radarImageUtils/blobHandling';
+import { sendTimestampsToBlobAPI } from '@/lib/radarImageUtils/sendTimestampsToBlobAPI';
 
 const RadarClientComponent = dynamic(() => import('./RadarClientComponent'), {
     ssr: false,
@@ -28,8 +28,7 @@ export default function RadarServerComponent() {
                     setImagePaths(paths);
                     setIsLoading(false);
                 } else {
-                    const paths =
-                        await fetchRadarImagesAndSaveToBlob(newTimestamps);
+                    const paths = await sendTimestampsToBlobAPI(newTimestamps);
                     setImagePaths(paths);
                     setIsLoading(false);
                 }
