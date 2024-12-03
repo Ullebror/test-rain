@@ -39,6 +39,7 @@ export const saveImageToBlob = async (url, timestamp) => {
             access: 'public',
             contentType: 'image/png',
         });
+        console.log('Blob result from put: ', blobResult);
 
         console.log(`Image saved to: ${blobResult.url}`);
         return blobResult.url;
