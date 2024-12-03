@@ -10,14 +10,14 @@ export const sendTimestampsToBlobAPI = async (newTimestamps) => {
         });
 
         if (!response.ok) {
-            throw new Error(
-                'Failed to send timestamps to processRadarImages API'
-            );
+            throw new Error('Failed to send timestamps to blob API');
         }
 
         const data = await response.json();
         return data.imagePaths;
     } catch (error) {
-        throw new Error('Error sending timestamps to API: ' + error.message);
+        throw new Error(
+            'Error sending timestamps to blob API: ' + error.message
+        );
     }
 };
