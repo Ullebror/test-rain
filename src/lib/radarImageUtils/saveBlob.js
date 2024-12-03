@@ -1,6 +1,4 @@
-/*import { list, put } from '@vercel/blob';
-
-const uploadBlobUrl = `/api/uploadBlob`;
+import { list, put } from '@vercel/blob';
 
 export const saveImageToBlob = async (url, timestamp) => {
     const formattedTimestamp = timestamp.replace(/[:?&/\\]/g, '-');
@@ -8,44 +6,59 @@ export const saveImageToBlob = async (url, timestamp) => {
 
     const blobExistsUrl = await doesBlobExist(fileName);
     if (blobExistsUrl) {
-        console.log('image already exists at: ' + blobExistsUrl);
+        console.log('Image already exists at:', blobExistsUrl);
         return blobExistsUrl;
     }
 
     try {
-        const res = await fetch(url);
+        console.log(`Fetching image from: ${url}`);
+        const res = await fetch(encodeURI(url), {
+            method: 'GET',
+            headers: {
+                Accept: 'image/png',
+            },
+        });
+
         if (!res.ok) {
             throw new Error(
-                `Failed to fetch image from ${url}: ${res.statusText} Status: ${res.status}`
+                `Failed to fetch image from ${url}: ${res.statusText} (Status: ${res.status})`
             );
         }
 
-        const arrayBuffer = await res.arrayBuffer();
-        const buffer = Buffer.from(arrayBuffer);
-        //const blob = new Blob([buffer], { type: 'image/png' });
+        console.log('Response Content-Type:', res.headers.get('Content-Type'));
 
-        const blobResult = await put(fileName, buffer, {
-            access: 'public', // Set to 'public' for public access
-            contentType: 'image/png', // Explicitly set the content type
+        const arrayBuffer = await res.arrayBuffer();
+        console.log('ArrayBuffer length:', arrayBuffer.byteLength);
+
+        const buffer = Buffer.from(arrayBuffer);
+        const blob = new Blob([buffer], { type: 'image/png' });
+
+        const blobResult = await put(fileName, blob, {
+            access: 'public',
+            contentType: 'image/png',
         });
+
         console.log(`Image saved to: ${blobResult.url}`);
         return blobResult.url;
     } catch (error) {
-        throw new Error(error);
+        throw new Error(`Error saving image to blob: ${error.message}`);
     }
 };
 
-// Helper function to check if blob already exists
 async function doesBlobExist(fileName) {
     try {
-        const response = await list();
-        const blobs = response.blobs || [];
-
-        // Find the blob with the specific filename
-        const foundBlob = blobs.find((blob) => blob.pathname === `${fileName}`);
-        if (foundBlob) {
-            return foundBlob.url; // Return the full URL
-        }
+        let cursor = null;
+        do {
+            const response = await list({ cursor });
+            const blobs = response.blobs || [];
+            const foundBlob = blobs.find(
+                (blob) => blob.pathname === `/${fileName}`
+            );
+            if (foundBlob) {
+                return foundBlob.url; // Return the full URL
+            }
+            cursor = response.cursor;
+        } while (cursor); // Continue until no more pages
 
         return null; // Return null if the blob does not exist
     } catch (error) {
@@ -53,4 +66,3 @@ async function doesBlobExist(fileName) {
         return null; // Return null in case of an error
     }
 }
-*/
