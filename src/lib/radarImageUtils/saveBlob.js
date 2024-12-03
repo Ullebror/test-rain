@@ -1,6 +1,8 @@
 import { list, put } from '@vercel/blob';
 
-export const saveImageToBlob = async (timestamp, url) => {
+export const saveImageToBlob = async (url, timestamp) => {
+    console.log('Timestamp from input: ', timestamp);
+    console.log('URL from input: ', url);
     const formattedTimestamp = timestamp.replace(/[:?&/\\]/g, '-');
     const fileName = `radar-image-${formattedTimestamp}.png`;
     console.log('fileName: ', fileName);
