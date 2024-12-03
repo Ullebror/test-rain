@@ -1,21 +1,23 @@
-import { fetchAndSaveImage } from './saveLocal';
+//import { fetchAndSaveImage } from './fetchAndSaveImage';
+import { saveImageToBlob } from './saveBlob';
 
 // Function to introduce a delay
 const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 // Main function to fetch and save all radar images
-export async function fetchRadarImagesAndSave(
+export async function fetchRadarImagesAndSaveToBlob(
     urls,
     timestamps,
     concurrencyLimit = 2
 ) {
     const imagePaths = []; // Array to hold successfully saved image paths
     const executing = []; // Array to track currently executing promises
+    // Selects the saving function dynamically
 
     for (let i = 0; i < urls.length; i++) {
-        const promise = fetchAndSaveImage(urls[i], timestamps[i])
+        const promise = saveImageToBlob(urls[i], timestamps[i])
             .then((imagePath) => {
                 if (imagePath) {
-                    imagePaths.push(imagePath); // Add the path if successfully saved
+                    imagePaths.push({ imagePath, timestamp: timestamps[i] }); // Add the path and timestamp if successfully saved
                 }
             })
             .catch((error) => {
