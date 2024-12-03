@@ -52,8 +52,9 @@ async function doesBlobExist(fileName) {
         do {
             const response = await list({ cursor });
             const blobs = response.blobs || [];
-            const foundBlob = blobs.find(
-                (blob) => blob.pathname === `/${fileName}`
+            // Find the blob with the specific filename
+            const foundBlob = blobs.find((blob) =>
+                blob.pathname.includes(fileName)
             );
             if (foundBlob) {
                 return foundBlob.url; // Return the full URL
