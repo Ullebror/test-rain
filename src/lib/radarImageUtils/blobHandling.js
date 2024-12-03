@@ -13,7 +13,7 @@ export async function fetchRadarImages(urls, timestamps, concurrencyLimit = 2) {
             .then((imagePath) => {
                 if (imagePath) {
                     imagePaths.push({
-                        url: imagePath[i],
+                        url: imagePath,
                         timestamp: timestamps[i],
                     }); // Add the path and timestamp if successfully saved
                 }
