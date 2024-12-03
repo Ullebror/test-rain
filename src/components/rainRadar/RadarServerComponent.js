@@ -9,6 +9,7 @@ import { fetchRadarImagesAndSaveToBlob } from '@/lib/radarImageUtils/blobHandlin
 const RadarClientComponent = dynamic(() => import('./RadarClientComponent'), {
     ssr: false,
 });
+const isDeploymentApi = process.env.NEXT_PUBLIC_USE_DEPLOY_API === 'true';
 
 export default function RadarServerComponent() {
     const [imagePaths, setImagePaths] = useState([]);
@@ -22,7 +23,7 @@ export default function RadarServerComponent() {
 
             try {
                 setIsLoading(true);
-                if (process.env.NODE_ENV === 'development') {
+                if (!isDeploymentApi) {
                     const paths = await sendTimestampsToAPI(newTimestamps);
                     setImagePaths(paths);
                     setIsLoading(false);
