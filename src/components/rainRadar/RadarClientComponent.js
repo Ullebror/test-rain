@@ -109,6 +109,7 @@ export default function RadarClientComponent({ data }) {
     const initialZoom = 6.1;
     const [iconSize, setIconSize] = useState(5);
 
+    console.log('Data in client', data);
     const toggleMapStyle = () => {
         setIsDarkMode((prevMode) => !prevMode);
     };
