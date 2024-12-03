@@ -12,7 +12,10 @@ export async function fetchRadarImages(urls, timestamps, concurrencyLimit = 2) {
         const promise = saveImageToBlob(urls[i], timestamps[i])
             .then((imagePath) => {
                 if (imagePath) {
-                    imagePaths.push({ imagePath, timestamp: timestamps[i] }); // Add the path and timestamp if successfully saved
+                    imagePaths.push({
+                        url: imagePath,
+                        timestamp: timestamps[i],
+                    }); // Add the path and timestamp if successfully saved
                 }
             })
             .catch((error) => {
