@@ -22,10 +22,11 @@ export default async function handler(req, res) {
             const imagePaths = await fetchRadarImages(urls, timestamps);
             console.log('imagePaths: ', imagePaths);
 
-            const result = timestamps.map((timestamp, index) => ({
+            /* const result = timestamps.map((timestamp, index) => ({
                 timestamp,
                 url: imagePaths[index],
-            }));
+            })); */
+            const result = imagePaths;
             console.log('Results:', result);
             res.status(200).json({ imagePaths: result });
         } catch (error) {
