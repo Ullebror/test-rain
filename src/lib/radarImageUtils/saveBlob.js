@@ -1,4 +1,4 @@
-import { list, put } from '@vercel/blob';
+/*import { list, put } from '@vercel/blob';
 
 const uploadBlobUrl = `/api/uploadBlob`;
 
@@ -22,9 +22,9 @@ export const saveImageToBlob = async (url, timestamp) => {
 
         const arrayBuffer = await res.arrayBuffer();
         const buffer = Buffer.from(arrayBuffer);
-        const blob = new Blob([buffer], { type: 'image/png' });
+        //const blob = new Blob([buffer], { type: 'image/png' });
 
-        const blobResult = await put(fileName, blob, {
+        const blobResult = await put(fileName, buffer, {
             access: 'public', // Set to 'public' for public access
             contentType: 'image/png', // Explicitly set the content type
         });
@@ -53,3 +53,4 @@ async function doesBlobExist(fileName) {
         return null; // Return null in case of an error
     }
 }
+*/
