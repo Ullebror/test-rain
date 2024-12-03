@@ -39,9 +39,3 @@ export default async function handler(req, res) {
 
     //return res.status(200).json({ url: blob.url });
 }
-
-export const config = {
-    api: {
-        bodyParser: false,
-    },
-};
