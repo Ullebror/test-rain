@@ -3,6 +3,9 @@ import { requestRainRadar } from '@/lib/fmiQueryData';
 import { fetchRadarImages } from '@/lib/radarImageUtils/blobHandling';
 
 export default async function handler(req, res) {
+    console.log('Request method:', req.method);
+    console.log('Request headers:', req.headers);
+    console.log('Request body:', req.body);
     if (req.method === 'POST') {
         const { timestamps } = req.body;
 
