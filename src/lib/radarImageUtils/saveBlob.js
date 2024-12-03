@@ -3,7 +3,7 @@ import { list, put } from '@vercel/blob';
 const uploadBlobUrl = `/api/uploadBlob`;
 
 export const saveImageToBlob = async (url, timestamp) => {
-    const formattedTimestamp = timestamp.replace(/:/g, '-');
+    const formattedTimestamp = timestamp.replace(/[:?&/\\]/g, '-');
     const fileName = `radar-image-${formattedTimestamp}.png`;
 
     const blobExistsUrl = await doesBlobExist(fileName);
