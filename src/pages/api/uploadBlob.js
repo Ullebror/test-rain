@@ -20,11 +20,13 @@ export default async function handler(req, res) {
             });
 
             const imagePaths = await fetchRadarImages(urls, timestamps);
+            console.log('imagePaths: ', imagePaths);
 
             const result = timestamps.map((timestamp, index) => ({
                 timestamp,
                 url: imagePaths[index],
             }));
+            console.log('Results:', result);
             res.status(200).json({ imagePaths: result });
         } catch (error) {
             res.status(500).json({ error: 'Failed to process radar images' });
