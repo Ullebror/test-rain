@@ -1,5 +1,5 @@
 import { list, put } from '@vercel/blob';
-
+/*
 export const saveImageToBlob = async (url, timestamp) => {
     console.log('Timestamp from input: ', timestamp);
     console.log('URL from input: ', url);
@@ -34,8 +34,6 @@ export const saveImageToBlob = async (url, timestamp) => {
         console.log('ArrayBuffer length:', arrayBuffer.byteLength);
 
         const buffer = Buffer.from(arrayBuffer);
-        const blob = new Blob([buffer], { type: 'image/png' });
-        console.log('blob:', blob);
 
         const blobResult = await put(fileName, buffer, {
             access: 'public',
@@ -71,3 +69,4 @@ async function doesBlobExist(fileName) {
         return null; // Return null in case of an error
     }
 }
+*/
