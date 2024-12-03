@@ -3,6 +3,7 @@ import { list, put } from '@vercel/blob';
 export const saveImageToBlob = async (url, timestamp) => {
     const formattedTimestamp = timestamp.replace(/[:?&/\\]/g, '-');
     const fileName = `radar-image-${formattedTimestamp}.png`;
+    console.log('fileName: ', fileName);
 
     const blobExistsUrl = await doesBlobExist(fileName);
     if (blobExistsUrl) {
@@ -32,7 +33,7 @@ export const saveImageToBlob = async (url, timestamp) => {
 
         const buffer = Buffer.from(arrayBuffer);
         const blob = new Blob([buffer], { type: 'image/png' });
-        console.log(blob);
+        console.log('blob:', blob);
 
         const blobResult = await put(fileName, blob, {
             access: 'public',
