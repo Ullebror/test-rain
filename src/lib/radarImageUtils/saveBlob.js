@@ -1,5 +1,5 @@
 import { list, put } from '@vercel/blob';
-/*
+
 export const saveImageToBlob = async (url, timestamp) => {
     console.log('Timestamp from input: ', timestamp);
     console.log('URL from input: ', url);
@@ -13,20 +13,18 @@ export const saveImageToBlob = async (url, timestamp) => {
         return blobExistsUrl;
     }
 
-    try {
-        console.log(`Fetching image from: ${url}`);
-        const res = await fetch(encodeURI(url), {
-            method: 'GET',
-            headers: {
-                Accept: 'image/png',
-            },
-        });
+    const timeout = 10000; // 10 seconds
+    const fetchPromise = fetch(url, {
+        method: 'GET',
+        headers: { Accept: 'image/png' },
+    });
 
-        if (!res.ok) {
-            throw new Error(
-                `Failed to fetch image from ${url}: ${res.statusText} (Status: ${res.status})`
-            );
-        }
+    const timeoutPromise = new Promise((_, reject) =>
+        setTimeout(() => reject(new Error('Request timed out')), timeout)
+    );
+
+    try {
+        const res = await Promise.race([fetchPromise, timeoutPromise]);
 
         console.log('Response Content-Type:', res.headers.get('Content-Type'));
 
@@ -69,4 +67,3 @@ async function doesBlobExist(fileName) {
         return null; // Return null in case of an error
     }
 }
-*/
