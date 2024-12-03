@@ -13,7 +13,7 @@ export const saveImageToBlob = async (url, timestamp) => {
         return blobExistsUrl;
     }
 
-    const timeout = 30000; // 30 seconds
+    const timeout = 50000; // 50 seconds
     const fetchPromise = fetch(url, {
         method: 'GET',
         headers: { Accept: 'image/png' },
