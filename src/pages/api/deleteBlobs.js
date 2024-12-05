@@ -28,7 +28,7 @@ export default async function handler(req, res) {
             if (!match) return false; // Skip if the naming format doesn't match
 
             const blobTimestamp = new Date(
-                match[1].replace(/-/g, ':').replace(/T/, ' ')
+                match[1].replace(/-(\d{2}-\d{2}\.\d{3}Z)$/, ':$1')
             ).getTime();
             console.log(
                 `Blob: ${blob.name}, Timestamp: ${blobTimestamp}, Current Time: ${currentTime}`
