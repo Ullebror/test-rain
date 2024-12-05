@@ -37,7 +37,6 @@ export default function RadarServerComponent() {
                 setError(true);
                 setIsLoading(false);
             }
-            console.log('Got these images', imagePaths);
         };
 
         fetchRadarImages();

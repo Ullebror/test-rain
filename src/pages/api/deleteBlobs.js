@@ -19,6 +19,7 @@ export default async function handler(req, res) {
                 console.warn('Blob has no name:', blob); // Log blobs without names
                 return false; // Skip blobs without names
             }
+            console.log(blob.pathname);
 
             const match = blob.pathname.match(
                 /radar-image-(\d{4}-\d{2}-\d{2}T\d{2}-\d{2}-\d{2}\.\d{3}Z)-/
@@ -44,6 +45,7 @@ export default async function handler(req, res) {
 
         // Delete each old blob
         for (const blob of blobsToDelete) {
+            console.log('Deleting blob: ', blob.url);
             await del(blob.url);
         }
 
