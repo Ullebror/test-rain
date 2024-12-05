@@ -29,7 +29,10 @@ export default async function handler(req, res) {
             // Debugging the extracted timestamp
             console.log('Extracted timestamp from match:', match[1]);
             const blobTimestamp = new Date(
-                match[1].replace(/-(\d{2}-\d{2}\.\d{3}Z)$/, 'T$1:$2:$3')
+                match[1].replace(
+                    /T(\d{2})-(\d{2})-(\d{2}\.\d{3}Z)/,
+                    'T$1:$2:$3'
+                )
             ).getTime();
             console.log(
                 `Blob: ${blob.pathname}, Timestamp: ${blobTimestamp}, Current Time: ${currentTime}`
