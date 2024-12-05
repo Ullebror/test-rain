@@ -22,7 +22,7 @@ export default async function handler(req, res) {
             console.log(blob.pathname);
 
             const match = blob.pathname.match(
-                /radar-image-(\d{4}-\d{2}-\d{2}T\d{2}-\d{2}-\d{2}\.\d{3}Z)-/
+                /radar-image-(\d{4}-\d{2}-\d{2}T\d{2}-\d{2}-\d{2}\.\d{3}Z)\.png/
             );
 
             if (!match) return false; // Skip if the naming format doesn't match
