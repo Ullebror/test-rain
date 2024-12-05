@@ -26,12 +26,13 @@ export default async function handler(req, res) {
             );
 
             if (!match) return false; // Skip if the naming format doesn't match
-
+            // Debugging the extracted timestamp
+            console.log('Extracted timestamp from match:', match[1]);
             const blobTimestamp = new Date(
                 match[1].replace(/-(\d{2}-\d{2}\.\d{3}Z)$/, ':$1')
             ).getTime();
             console.log(
-                `Blob: ${blob.name}, Timestamp: ${blobTimestamp}, Current Time: ${currentTime}`
+                `Blob: ${blob.pathname}, Timestamp: ${blobTimestamp}, Current Time: ${currentTime}`
             );
             return blobTimestamp < threeHoursAgo;
         });
