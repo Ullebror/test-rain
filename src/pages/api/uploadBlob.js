@@ -3,9 +3,6 @@ import { requestRainRadar } from '@/lib/fmiQueryData';
 import { fetchRadarImages } from '@/lib/radarImageUtils/blobHandling';
 
 export default async function handler(req, res) {
-    console.log('Request method:', req.method);
-    console.log('Request headers:', req.headers);
-    console.log('Request body:', req.body);
     if (req.method === 'POST') {
         const { timestamps } = req.body;
 
@@ -20,14 +17,9 @@ export default async function handler(req, res) {
             });
 
             const imagePaths = await fetchRadarImages(urls, timestamps);
-            console.log('imagePaths: ', imagePaths);
 
-            /* const result = timestamps.map((timestamp, index) => ({
-                timestamp,
-                url: imagePaths[index],
-            })); */
             const result = imagePaths;
-            console.log('Results:', result);
+
             res.status(200).json({ imagePaths: result });
         } catch (error) {
             res.status(500).json({ error: 'Failed to process radar images' });
@@ -36,9 +28,4 @@ export default async function handler(req, res) {
     } else {
         res.status(405).json({ error: 'Method not allowed' });
     }
-    /*const blob = await put(req.query.filename, req, {
-        access: 'public',
-    }); */
-
-    //return res.status(200).json({ url: blob.url });
 }

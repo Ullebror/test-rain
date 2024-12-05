@@ -29,6 +29,9 @@ export default async function handler(req, res) {
             const blobTimestamp = new Date(
                 match[1].replace(/-/g, ':').replace(/T/, ' ')
             ).getTime();
+            console.log(
+                `Blob: ${blob.name}, Timestamp: ${blobTimestamp}, Current Time: ${currentTime}`
+            );
             return blobTimestamp < threeHoursAgo;
         });
 
